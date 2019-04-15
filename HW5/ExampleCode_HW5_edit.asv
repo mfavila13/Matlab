@@ -25,11 +25,9 @@ for t=1:N_timepoints
         for i=1:N_x
             for  j=1:N_y
                  rawvolume(i,j,k,t)=fread(fd,1,'short');
-                 corrvolume(i,j,k,t)=fread(a_fd,1,'short');
-                 
+                 corrvolume(i,j,k,t)=fread(a_fd,1,'short'); 
             end
         end
-        
     end
     waitbar(t/N_timepoints)
     fclose(fd);
@@ -105,6 +103,9 @@ ylabel('BOLD signal');
 % Refer to PDF for explanation
 
 %% Q3: Correcting for bulk head motion with SPM and experimenting with different interpolation algorithms
+%prepare 5 sets of 3D Array: original, time corrected,trilinear, 4th degree
+%b-spline, and nearest neigbor
+%uses volume 011
 o_fd=fopen('FUNC4_vol.011.img','rb');
 a_fd=fopen('aFUNC4_vol.011.img','rb');
 t_fd=fopen('r_tri_aFUNC4_vol.011.img','rb');
@@ -125,7 +126,7 @@ for k=1:N_slice
         end
     end
 end
-fclose(fd);
+fclose(o_fd);
 
 figure('NumberTitle','off','Name','Different Reslice Options Axial View')
 slice_no = 3;
@@ -240,38 +241,35 @@ slice_no = 3;
 
 org_image_o=o_volume(1:64,1:64,slice_no);
 org_image_a=zeros(N_x,N_y);
+org_image_t=zeros(N_x,N_y);
+org_image_f=zeros(N_x,N_y);
+org_image_n=zeros(N_x,N_y);
 
-subplot(2,3,1)
+subplot(2,2,1)
 
 org_image_a=a_volume(1:64,1:64,slice_no);
-image = 
+image = org_image_a - org_image_o
 imagesc(image);
 title('Time Corrected Volume')
 
-subplot(2,3,2)
+subplot(2,2,2)
 org_image=t_volume(1:64,1:64,slice_no);
-imagesc(org_image);
+image = org_image_t - org_image_o
+imagesc(image);
 title('Trilinear Interpolation')
 
-subplot(2,3,3)
+subplot(2,2,3)
 org_image_f=f_volume(1:64,1:64,slice_no);
-imagesc(org_image_f);
+image = org_image_f - org_image_o
+imagesc(image);
 title('4th Degree B-Spline Interpolation')
 
-subplot(2,3,4)
+subplot(2,2,4)
 org_image_n=n_volume(1:64,1:64,slice_no);
-imagesc(org_image_n);
+image = org_image_n - org_image_o
+imagesc(image);
 title('Nearest Neighbor Interpolation')
-
-subplot(2,3,5)
-org_image_o=o_volume(1:64,1:64,slice_no);
-imagesc(org_image);
-title('Original Image')
-
-subplot(2,3,6)
-imagea = org_image_f - org_image_o ;
-imagesc(imagea)
 colormap(gray);
-title('Pixel Variation from original to 4th Degree interpolation')
+
 
 % Refer to PDF for explanation
