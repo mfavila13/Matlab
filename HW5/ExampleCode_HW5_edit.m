@@ -25,11 +25,9 @@ for t=1:N_timepoints
         for i=1:N_x
             for  j=1:N_y
                  rawvolume(i,j,k,t)=fread(fd,1,'short');
-                 corrvolume(i,j,k,t)=fread(a_fd,1,'short');
-                 
+                 corrvolume(i,j,k,t)=fread(a_fd,1,'short'); 
             end
         end
-        
     end
     waitbar(t/N_timepoints)
     fclose(fd);
