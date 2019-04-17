@@ -172,9 +172,9 @@ for k = 1:numsteps-1
     m0 = rk_fcn('f_m',m,v_m,dt);
     n0 = rk_fcn('f_n',n,v_m,dt);
     h0 = rk_fcn('f_h',h,v_m,dt);
-    healthym0 = rk_fcn('f_m',healthym,healthyv_m,dt);
-    healthyn0 = rk_fcn('f_n',healthyn,healthyv_m,dt);
-    healthyh0 = rk_fcn('f_h',healthyh,healthyv_m,dt);
+    healthym0 = rk_fcn('f_m',m,healthyv_m,dt);
+    healthyn0 = rk_fcn('f_n',n,healthyv_m,dt);
+    healthyh0 = rk_fcn('f_h',h,healthyv_m,dt);
     
 % Solving for next timestep for m, n, h.
     m = m + dt*m0;
@@ -213,7 +213,6 @@ for k = 1:numsteps-1
         healthyI_s = 0*linspace(1,2,NumLocs);
         if k > tdelay/dt && k <= (tdelay+tdur)/dt
             I_s(Nstim_pos1) = I_stim1;
-            healthyI_s(Nstim_pos1) = I_stim1;
             point = k;
         elseif k > tdelay2/dt && k <= (tdelay2+tdur2)/dt            
             I_s(Nstim_pos2) = I_stim2;
@@ -231,9 +230,7 @@ for k = 1:numsteps-1
             I_s(Nstim_pos1) = I_stim1;
         elseif k > tdelay3/dt && k <= (tdelay3+tdur3)/dt
             I_s(Nstim_pos3) = I_defib;
-            healthyI_s(Nstim_pos3) = I_defib;
             %I_s(1,Nstim_pos3+1) = Nstim3;
-        
         elseif k > tdelay4/dt && k <= (tdelay4+tdur4)/dt
             I_s = Nstim4;
             I_S = healthyI_S;
