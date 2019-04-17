@@ -27,7 +27,10 @@ disp('BME 445 Final Project Tasks')
 mode_flag = input(...
     ['   Healthy mode         (press 1) ',...
     '\n   Unidirectional block (press 2) ',... 
-    '\n   Your choice: ']);
+    '\n   VFib model           (press 3) ', ...
+    '\n   _________________    (press 4) ', ...
+    '\n   Your choice: ',]);
+%'\n   _________________    (press 4) ]);
 % Lab 6 task - Consider adding later
 % Uncomment below for Lab #6 (Apr 3), and add to above options.
 %'\n   VFib model           (press 3) ',... 
@@ -35,7 +38,7 @@ mode_flag = input(...
 
 % Uncomment below for Lab #6 (Apr 3)
 % add_defib = input('Add Defibrillator? \n  Yes (press 1), \n  No  (press 0): ');
-
+add_defib = input('Add Defibrillator? \n  Yes (press 1), \n  No  (press 0): ');
 dur_total = input('Total duration of simulation? (ms, deault 40) ');
 
 dt = 0.01;
@@ -59,14 +62,15 @@ Nstim_pos2 = input('Location of 2nd stimuli: ');
 %  This is the defibrillator variable.
 I_defib = 350;
 tdur3 = 1;
-tdelay3 = 20;
-Nstim3=1:100;
+tdelay3 = tdelay2 +1;
+Nstim3=75;
+Nstim_pos3 = 100;
 
 % Heart Stimulus after defibrillation that stabilizes the heart
 I_stim4 = 350;
 tdur4 = 1;
 tdelay4 = 35;
-Nstim4 = 75;
+Nstim4 = 1:100;
 
 % Setting up the cable parameters.
 v_m = ground;                      
@@ -170,7 +174,7 @@ for k = 1:numsteps-1
 %    G_K = [G_K; g_K];    
 
 % Code for two stimuli
-    if mode_flag == 1 || mode_flag == 2 
+    if mode_flag == 1 || mode_flag == 2 ||  mode_flag == 3
     %  healthy (1)    or unidirectional block (2)
         I_s = 0*linspace(1,2,NumLocs);
         if k > tdelay/dt && k <= (tdelay+tdur)/dt
@@ -183,6 +187,11 @@ for k = 1:numsteps-1
         % Lab 6 (April 3rd):  Your task is to 
         % develop a dedicated model for 
         % application of defibrillator here.
+    if add_defib == 1
+        if k > tdelay3/dt && k <= (tdelay3+tdur3)/dt
+            I_s(Nstim_pos3) = I_defib;
+        end
+    end
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         
     end
@@ -322,7 +331,7 @@ function I_K = ik(v,n,g_K,e_K)
 
 % g_K = 36;
 % e_K = -12.26;
-I_K = g_K*n.^4.*(v-e_K);
+I_K = g_K.*n.^4.*(v-e_K);
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
