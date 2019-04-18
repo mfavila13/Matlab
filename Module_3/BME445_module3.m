@@ -197,13 +197,13 @@ for k = 1:numsteps-1
         % develop a dedicated model for 
         % application of defibrillator here.
     if add_defib == 1
-        for o = 1:97
-            if (V(k,o)) >= 50 && (V(k,o+3)) < -8 && k > 300
+        for o = 1:99
+            if (V(k,o)) >= 50 && (V(k,o+1)) < -8 %&& k > 300
                 %count
                 %count = count + .01;
                 %spot = o;
                 if pass == 0
-                    node = o + 3;
+                    node = o + 1
                     time = k*.01;
                     tdelay3 = time;
                     pass = 1;
