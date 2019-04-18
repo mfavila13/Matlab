@@ -4,7 +4,7 @@
 %% Set up Membrane Ring (George R. Mines Experiment)
 % This part of the code sets up the membrane ring for a re-entry model.
 %%
-function BME445_final_project()
+function BME445_module3()
 NumLocs = 100;                  % Number of locations
 radius = 1.5/(2*pi);            % radius
 d_theta = 2*pi./NumLocs;        % distance in radial coordinates
@@ -139,7 +139,7 @@ coeff_A = a/(2*R_i*dx*dx)*ones(1,NumLocs);
 % unidirectional block (Disease)
 if mode_flag == 2 || mode_flag == 3
     % In Lab #5, you are tasked to comment on the purpose of this modification.
-    j = 20;
+    j = 10;
     A(j,j-1) = 0;
     A(j,j) = -1;
 end
