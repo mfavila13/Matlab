@@ -1,3 +1,4 @@
+%provided function: ece565-s19-project2 Appendix
 function c = connectpoly(x, y)
 % CONNECTPOLY Connects vertices of a polygon.
 % C = CONNECTPOLY(X, Y) connects the points with coordinates given

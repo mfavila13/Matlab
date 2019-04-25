@@ -1,3 +1,4 @@
+%provided function: ece565-s19-project2 Appendix
 function [x, y] = intline(x1, x2, y1, y2)
 %INTLINE Integer-coordinate line drawing algorithm.
 % [X, Y] = INTLINE(X1, X2, Y1, Y2) computes an

@@ -1,8 +1,9 @@
-I = imread('polymersomes.tif');
+function ECE565_prob2(file)
+image = imread(file);
 mgk = 0;
 mt = 0;
-[m,n] = size(I);
-h = imhist(I); pi = h/(m.*n);
+[m,n] = size(image);
+h = imhist(image); pi = h/(m.*n);
 for i=1:1:256 
     if pi(i)~=0
         lv=i;
@@ -31,10 +32,11 @@ for k =1:256
 end
 [y,T]=max(var(:));
 T=T+lv;
-g=I; 
+g=image; 
 g1=find(g>=T); 
 g(g1)=255; 
 g2=find(g<T); 
 g(g2)=0;
-figure(2)
+figure(20)
 imshow(g)
+end

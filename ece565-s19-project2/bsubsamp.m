@@ -1,3 +1,4 @@
+%provided function: ece565-s19-project2 Appendix
 function [s, sUnit] = bsubsamp(b, gridsep)
 %BSUBSAMP Subsample a boundary.
 % [S, SUNIT] = BSUBSAMP(B, GRIDSEP) subsamples the boundary B by

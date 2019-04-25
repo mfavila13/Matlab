@@ -1,3 +1,4 @@
+%provided function: ece565-s19-project2 Appendix
 function image = bound2im(b, M, N)
 % BOUND2IM Converts a boundary to an image.
 % IMAGE = BOUND2IM(b) converts b, an np-by-2 array containing the

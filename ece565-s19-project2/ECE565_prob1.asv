@@ -1,5 +1,5 @@
-function ECE565_prob1(file) 
-image = imread(file);
+function ECE565_prob1(image) 
+image = 'noisy_fingeprrint.tif'
 % STEP 1: Compute mean intensity of image from histogram, set T=mean(I) 
 [counts,N]=imhist(image);
 i=1; 
@@ -25,6 +25,6 @@ end
 % Normalize the threshold to the range [i, 1]. 
 level = (Threshold - 1) / (N(end) - 1);
 BW = im2bw(image,level);
-figure(10)
+figure(1)
 imshow(BW)
 end

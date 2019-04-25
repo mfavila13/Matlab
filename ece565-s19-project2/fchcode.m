@@ -1,56 +1,7 @@
-function ECE565_prob3(file)
-image = imread(file); 
-figure
-imshow(image);
-w=fspecial('average',9); % built in matlab function: 2D filter averaging filter with size 9 x 9
-g = imfilter(image,w,'symmetric'); % built in matlab function: filtering by smoothing image using symmetric option
-figure(30) 
-imshow(g,[]) 
-level = graythresh(image); 
-% Use O'tsu thresholding smoothed image. 
-BW = im2bw(g,level); 
-% Binary image of g. 
-figure(31) 
-imshow(BW) 
-%Extract the outer boundary of gB and display the results as a binary image. 
-B=bwboundaries(BW); 
-d=cellfun('length',B); 
-[max_d,k]=max(d); 
-b=B{1}; 
-[M,N]=size(BW); 
-g1=bound2im(b,M,N); 
-figure(32)
-imshow(g1) 
-%Subsample the boundary 
-[s,su]=bsubsamp(b,50); 
-g2=bound2im(s,M,N); 
-figure(33) 
-imshow(g2) 
-%Connect the subsampled boundary points with straight line segments. 
-cn=connectpoly(s(:,1),s(:,2)); 
-g3=bound2im(cn,M,N); 
-figure(34) 
-imshow(g3) 
-fchcode(b,8)
-end
-%% 
-%computes the Freeman chain code c of a boundary b with the code connectivity specified 
-%c.fcc c.diff c.mm c.diffmm c.x0y0 c=fchcode(su); 
-%%fchcode 
-%{
-function c = fchcode(b, conn, dir) 
+function c = fchcode(b, CONN) 
 %FCHCODE Computes the Freeman chain code of a boundary. 
-% C = FCHCODE(B) computes the 8-connected Freeman chain code of a 
-% set of 2-D coordinate pairs contained in B, an np-by-2 array. C % is a structure with the following fields: 
-% 
-% c.fcc = Freeman chain code (1-by-np) 
-% c.diff = First difference of code c.fcc (1-by-np) 
-% c.mm = Integer of minimum magnitude from c.fcc (1-by-np) 
-% c.diffmm = First difference of code c.mm (1-by-np) 
-% c.x0y0 = Coordinates where the code starts (1-by-2) 
-%6. 
-% 
-C = FCHCODE(B, CONN) produces the same outputs as above, but 
+
+%C = FCHCODE(B, CONN) produces the same outputs as above, but 
 % with the code connectivity specified in CONN. CONN can be 8 for 
 % an 8-connected chain code, or CONN can be 4 for a 4-connected 
 % chain code. Specifying CONN=4 is valid only if the input 
@@ -145,7 +96,7 @@ end
 z = 4*(DEL(:, 1) + 2) + (DEL(:, 2) + 2); 
 % Use the index to map into the table. The following are 
 % the Freeman 8-chain codes, organized in a 1-by-np array. 
-fcc = C(z); 
+fcc = C(z) ;
 % Check if direction of code sequence needs to be reversed. 
 if strcmp(dir, 'reverse')
 fcc = coderev(fcc); 
@@ -153,7 +104,7 @@ fcc = coderev(fcc);
 end 
 % If 4-connectivity is specified, check that all components 
 % of fcc are 0, 2, 4, or 6. 
-if conn == 4 
+if CONN == 4 
     val = find(fcc == 1 | fcc == 3 | fcc == 5 | fcc ==7 );
     if isempty(val) 
         fcc = fcc./2; 
@@ -163,13 +114,14 @@ if conn == 4
 end
 % Freeman chain code for structure output. 
 c.fcc = fcc;
+
 % Obtain the first difference of fcc. 
-c.diff = codediff(fcc,conn); 
+c.diff = firstdiff(fcc,CONN);
 % See below for function codediff. 
 % Obtain code of the integer of minimum magnitude. 
-c.mm = minmag(fcc); 
+c.mm = min_mag(fcc);
 % See below for function minmag. 
 % Obtain the first difference of fcc 
-c.diffmm = codediff(c.mm, conn);
+c.diffmm = firstdiff(c.mm, CONN);
+disp(c.diff)
 end
-%}
