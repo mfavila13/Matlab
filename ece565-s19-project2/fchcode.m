@@ -39,5 +39,5 @@ c.diff = firstdiff(fcc,CONN);
 c.mm = min_mag(fcc);
 
 % first difference of c.mm 
-c.diffmm = firstdiff(c.mm, CONN);
+c.diffmm = firstdiff(c.mm, CONN);bound2im
 end
