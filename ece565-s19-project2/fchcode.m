@@ -1,5 +1,5 @@
 function c = fchcode(b, CONN) 
-%dfine indexing
+%d efine indexing
 C(11)=0;
 C(7)=1;
 C(6)=2;
@@ -15,8 +15,8 @@ y0 = b(1, 2);
 c.x0y0 = [x0, y0]; 
 
 a = circshift(b, [-1, 0]); 
-DEL = a - b;
-z = 4*(DEL(:, 1) + 2) + (DEL(:, 2) + 2);
+delta = a - b;
+z = 4*(delta(:, 1) + 2) + (delta(:, 2) + 2);
 
 % use x and y diffference to assign numerical direction
 fcc = C(z);
@@ -26,7 +26,7 @@ if CONN == 4
     val = find(fcc == 1 | fcc == 3 | fcc == 5 | fcc ==7 );
     if isempty(val) 
         fcc = fcc./2; 
-    else warning('The specified 4-connected code cannot be satisfied.') 
+    else warning('4-connected chain cannot be performed on this boundary') 
     end
 end
 % freeman chain code
@@ -39,5 +39,5 @@ c.diff = firstdiff(fcc,CONN);
 c.mm = min_mag(fcc);
 
 % first difference of c.mm 
-c.diffmm = firstdiff(c.mm, CONN);bound2im
+c.diffmm = firstdiff(c.mm, CONN);
 end
