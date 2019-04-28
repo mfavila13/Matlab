@@ -10,8 +10,8 @@ min_dx = 7;
 max_dx = 30;
 lag_pot = zeros(1,max_dx);
 len_of_max = zeros(1,max_dx);
-for deltax = min_dx:max_dx
-%deltax = input('Input dx value (enter integer): ')
+%for deltax = min_dx:max_dx
+deltax = input('Input dx value (enter integer): ')
 NumLocs = 100;                  % Number of locations
 radius = 1.5/(2*pi);            % radius
 d_theta = 2*pi./NumLocs;        % distance in radial coordinates
@@ -50,7 +50,7 @@ mode_flag = 1;
 % Uncomment below for Lab #6 (Apr 3)
 % add_defib = input('Add Defibrillator? \n  Yes (press 1), \n  No  (press 0): ');
 add_defib = 0; %input('Add Defibrillator? \n  Yes (press 1), \n  No  (press 0): ');
-dur_total = 40; %input('Total duration of simulation? (ms, deault 40) ');
+dur_total = 20; %input('Total duration of simulation? (ms, deault 40) ');
 
 dt = 0.01;
 numsteps = dur_total/dt;
@@ -246,7 +246,7 @@ for k = 1:numsteps-1
 end
 %% Simulating the ring model
 %%
-%{
+
 figure(445)
 for j = 1:1
 for k = 1:numsteps
@@ -263,7 +263,7 @@ end
 %size(V,1)
 end
 %This variable will be useful in obtaining extracellular potential measures
-%}
+
 Time = linspace(0,dur_total-dt,numsteps); 
 %% Obtaining measurements from a probe
 % For Lab #7 (April 10-17), you will program an 'ECG Probe' to detect the measurements 
@@ -312,28 +312,36 @@ timelength(deltax)
 peak_t * 0.01
 lag_pot(deltax) = peak_t * 0.01
 
-%{
+
 figure(1)
 subplot(4,1,1)
 plot(Time,ex_pot(:,90))
-title('Contractile Activity (at node 90)')
+title('Contractile Activity (at node 90)');...
+    xlabel('Time (ms)');...
+    ylabel('Potemtial (mV)');
 
 
 subplot(4,1,2)
 plot(Time,maxpot)
-title('Maximum Potential (all nodes)')
+title('Maximum Potential (all nodes)');...
+    xlabel('Time (ms)');...
+    ylabel('Potemtial (mV)');
 
 subplot(4,1,3)
 plot(Time,maxcur_na)
-title('Maximum Sodium Current')
+title('Maximum Sodium Current');...
+    xlabel('Time (ms)');...
+    ylabel('Current (uA)');
 
 subplot(4,1,4)
 plot(Time,maxcur_k)
-title('Maximum Potassium Potential')
+title('Maximum Potassium Potential');...
+    xlabel('Time (ms)');...
+    ylabel('Potemtial (uA)');
 %figure('NumberTitle','off','Name','Membrane Potential at given node')
 %plot(Time,(V(:,90)))
 
-%}
+
 
 % Lab 7 (April 10th):  Your task is to 
 % develop a point source to detect the 
@@ -343,6 +351,7 @@ title('Maximum Potassium Potential')
 %figure('NumberTitle','off','Name','dx change')
 %plot(num_x, timelength)
 end
+%{
 figure(2)
 subplot(2,1,1)
 plot(min_dx:max_dx,len_of_max(min_dx:max_dx))
@@ -355,7 +364,8 @@ plot((min_dx:max_dx),lag_pot(min_dx:max_dx))
 title('Membrane Potential Lag behind Stimulus Current');...
     xlabel('delta x value (*10^-4)');...
     ylabel('time (ms)');
-end
+%}
+%end
 
 %% 
 % Runge kutta function
