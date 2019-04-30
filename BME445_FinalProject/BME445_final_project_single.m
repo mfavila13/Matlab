@@ -50,7 +50,7 @@ mode_flag = 1;
 % Uncomment below for Lab #6 (Apr 3)
 % add_defib = input('Add Defibrillator? \n  Yes (press 1), \n  No  (press 0): ');
 add_defib = 0; %input('Add Defibrillator? \n  Yes (press 1), \n  No  (press 0): ');
-dur_total = 5; %input('Total duration of simulation? (ms, deault 40) ');
+dur_total = 20; %input('Total duration of simulation? (ms, deault 40) ');
 
 dt = 0.01;
 numsteps = dur_total/dt;
