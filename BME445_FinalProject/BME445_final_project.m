@@ -1,9 +1,22 @@
-%% BME 445 Lab Module 3
-% This is a MATLAB Live Script (only available in advanced versions of MATLAB).  
-%% Lab 5 Task 1 - study the overall code.  See insructions for details.
+%% BME 445 Final project 
+% Marcus Favila Kwame Opoku Dristi Chaudhuri
+% This function is a modified extention of the BME445_final_project.m  file
+% provided by DR. Kawaji
 %% Set up Membrane Ring (George R. Mines Experiment)
 % This part of the code sets up the membrane ring for a re-entry model.
 %%
+% Comments noted with a *** denote a previously user input values, with a
+% related variable name, but are now hard coded to increase run time and
+% testing accessibility while reducing the errors occuring from missed
+% variable name changes
+
+%This function is an extension of the BME445_final_project_single.m file
+%that allows for the generation of two plots used for delta x comparison
+
+%some functions used in this lab were kept though unused in the final
+%generation of results in the instance these functions may have been needed
+%for experimentation
+
 function BME445_final_project()
 %num_x = 0.002*(1:30);
 min_dx = 7;
@@ -24,44 +37,29 @@ dx = deltax * 0.001
 R_i = .5;
 a = 0.002;
 
-% Test out 3D plot of a ring
-%plot3(x,y,ground,':b', 'LineWidth', 2);
-%title('Membrane Potential around ring');
 
 %% Set up Initial Variables and Input Options
 % This is a simple interface using the input command to set up the 
 %%
 disp('BME 445 Final Project Tasks')
-%{
-mode_flag = input(...
-    ['   Healthy mode         (press 1) ',...
-    '\n   Unidirectional block (press 2) ',... 
-    '\n   VFib model           (press 3) ', ...
-    '\n   Cardiac Ablation sim    (press 4) ', ...
-    '\n   Your choice: ',]);
-%}
-mode_flag = 1;
-%'\n   _________________    (press 4) ]);
-% Lab 6 task - Consider adding later
-% Uncomment below for Lab #6 (Apr 3), and add to above options.
-%'\n   VFib model           (press 3) ',... 
-%'\n   _________________    (press 4) ',...
 
-% Uncomment below for Lab #6 (Apr 3)
-% add_defib = input('Add Defibrillator? \n  Yes (press 1), \n  No  (press 0): ');
-add_defib = 0; %input('Add Defibrillator? \n  Yes (press 1), \n  No  (press 0): ');
-dur_total = 40; %input('Total duration of simulation? (ms, deault 40) ');
+mode_flag = 1;
+
+add_defib = 0; % *** input('Add Defibrillator? \n  Yes (press 1), \n  No  (press 0): ');
+dur_total = 40; % *** input('Total duration of simulation? (ms, deault 40) ');
 
 dt = 0.01;
 numsteps = dur_total/dt;
 %% Set up regular stimulus currents for simulated heart beats
 %%
+
 % Create first Stimuli 
 I_stim1 = 250;
 tdur = 1;
 tdelay = 0;
 Nstim_pos1 = 75;
 
+% *** This section unused ***
 % Create second Stimuli
 I_stim2 = 350;
 tdur2 = 1;
@@ -69,7 +67,7 @@ tdelay2 = 20; %input('Time of 2nd stimuli: ');
 Nstim_pos2 = 75; % input('Location of 2nd stimuli: ');
 
 %% 
-% Lab #6-7 - Debrillator code will be implemented in April.
+% *** This section unused ***
 
 %  This is the defibrillator variable.
 I_defib = 350;
@@ -83,7 +81,7 @@ I_stim4 = 350;
 tdur4 = 1;
 tdelay4 = 35;
 Nstim4 = 1:100;
-
+%%
 % Setting up the cable parameters.
 v_m = ground;                      
 
@@ -124,7 +122,6 @@ G_K = G_k;
 
 Iion = I_k + I_na + I_l;
 I_S = ground;
-%% Lab #5 Task 2. This part of the code sets up the Cable Equations. 
 %%
 % Matrix A will play a very important part of setting up 
 % the cable equations for this Final Project.
@@ -144,8 +141,9 @@ A = [A; [b1, [zeros(1,NumLocs-3)], b1,-b2]];
 
 I_s = I_S;
 coeff_A = a/(2*R_i*dx*dx)*ones(1,NumLocs);
-%% Lab 5 Task 3 - Modification for Unidirectional Block (Disease Model)
 %%
+% *** This section unused ***
+
 % unidirectional block (Disease)
 if mode_flag == 2 || mode_flag == 3
     % In Lab #5, you are tasked to comment on the purpose of this modification.
@@ -210,10 +208,6 @@ for k = 1:numsteps-1
          %   I_s(Nstim_pos2) = I_stim2;
         end
         
-        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        % Lab 6 (April 3rd):  Your task is to 
-        % develop a dedicated model for 
-        % application of defibrillator here.
     if add_defib == 1
         for o = 1:99
             if (V(k,o)) >= 50 && (V(k,o+1)) < -8 %&& k > 300
@@ -265,9 +259,7 @@ end
 %This variable will be useful in obtaining extracellular potential measures
 %}
 Time = linspace(0,dur_total-dt,numsteps); 
-%% Obtaining measurements from a probe
-% For Lab #7 (April 10-17), you will program an 'ECG Probe' to detect the measurements 
-% during this AP propagation from a point source.  
+
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -335,9 +327,7 @@ title('Maximum Potassium Potential')
 
 %}
 
-% Lab 7 (April 10th):  Your task is to 
-% develop a point source to detect the 
-% AP during this threshold stimuli.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %waitbar(deltax/30)
 %figure('NumberTitle','off','Name','dx change')
