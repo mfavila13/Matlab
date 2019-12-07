@@ -9,8 +9,7 @@ persistent w;
 persistent X;
 persistent Y;
 persistent count;
-%persistent B_addend;
-%persistent A_addend;
+
 B_addend = 0;
 A_addend = 0;
 B_term = 0;
