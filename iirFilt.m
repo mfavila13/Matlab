@@ -40,7 +40,6 @@ end
 if isempty(Y)
     Y=zeros(1,N+1);
 end
-
 X(count) = x_n;
 
 %Calculation of the x(n) summation
