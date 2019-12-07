@@ -9,7 +9,9 @@ global a b M N wmax
 for i = 1:length(XpF)
     time(i) = i/Fs;
 end
-
+wmax
+figure('Name','w analysis','NumberTitle','off')
+semilogx(w)
 figure('Name','IIR Filter: frequency response','NumberTitle','off');
 freqz(b,a)
 title('IIR Filter: frequency response')
@@ -23,6 +25,8 @@ ax.XLim = [0,200000];
 title('IIR Filter: frequency response')
 xlabel('Frequency (Hz)')
 ylabel('Magnitude (dB)')
+
+
 
 figure('Name','IIR Filter: zero-pole plot','NumberTitle','off');
 [vz,vp]=zplane(b,a);
