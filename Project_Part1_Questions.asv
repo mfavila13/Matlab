@@ -1,0 +1,13 @@
+% Marcus Favila
+%Project Part 1: Questions
+
+%clear variables
+clear
+clear iifFilt
+global a b M N wmax
+[XpF,Fs] = audioread('FilteredSignal_Part1.wav');
+for i = 1:length(XpF)
+    time(i) = i/Fs;
+end
+
+[h,w] = freqz(b,a,)

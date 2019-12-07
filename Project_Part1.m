@@ -27,7 +27,7 @@ for i=1:length(XpF),
     %read input signal sample-by-sample
     x_n = XpF(i);
     % call the iirFilt function to produce the output sample
-    y(i)=iirFilt(x_n); 
+    y(i)=iirFilt(x_n);
 end
 
 %plot the output audio

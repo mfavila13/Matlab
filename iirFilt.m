@@ -1,4 +1,9 @@
 function y_n = iirFilt(x_n)
+
+% clear iifFilt should be entered in Command Window before running 
+% Project_Part1.m 
+% if not cleared, peristent variables will cause values to be incorrect
+
 global a b M N wmax
 persistent w;
 persistent X;
@@ -10,9 +15,11 @@ B_addend = 0;
 A_addend = 0;
 B_term = 0;
 A_term = 0;
+
 if isempty(count)
     count = 1;
 end
+
 if isempty(w)
     w=zeros(1,N+1);
 end
@@ -22,12 +29,7 @@ end
 if isempty(Y)
     Y=zeros(1,N+1);
 end
-%if isempty(A_addend)
-%    A_addend=zeros(1,N+1);
-%end
-%if isempty(B_addend)
-%    B_addend=zeros(1,N+1);
-%end
+
 
 X(count) = x_n;
 
@@ -41,7 +43,7 @@ for k = 1:M+1
     end
     B_term = B_term + B_addend;
 end
-disp(B_term)
+%disp(B_term)
 for j = 2:N+1
     if (count-j) < 1
         A_addend = 0;
@@ -50,7 +52,7 @@ for j = 2:N+1
     end
     A_term = A_term + A_addend;
 end
-disp(A_term)
+%disp(A_term)
 
 y_n = B_term - A_term;
 Y(count) = y_n;
