@@ -1,5 +1,7 @@
-function part1q = Project_Part1_Questions()
-% Marcus Favila
+%Marcus Favila
+%ECE 437 Computer Project
+%07 Dec 2019
+
 %Project Part 1: Questions
 
 global a b M N wmax
@@ -17,12 +19,13 @@ figure('Name','IIR Filter: frequency response: logarithmic scale','NumberTitle',
 semilogx(w/pi,20*log10(abs(h)));
 ax = gca;
 ax.YLim = [-180, 20];
-ax.XLim = [0,20000];
+ax.XLim = [0,200000];
 title('IIR Filter: frequency response')
 xlabel('Frequency (Hz)')
-ylabel('Magnitude (db)')
+ylabel('Magnitude (dB)')
 
 figure('Name','IIR Filter: zero-pole plot','NumberTitle','off');
 [vz,vp]=zplane(b,a);
 title('IIR Filter: zero-pole plot')
-end
+zeros = vz
+poles = vp
