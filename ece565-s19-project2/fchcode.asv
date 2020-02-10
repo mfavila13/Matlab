@@ -1,0 +1,52 @@
+function c = fchcode(b, CONN) 
+%dfine indexing
+C(11)=0;
+C(7)=1;
+C(6)=2;
+C(5)=3;
+C(9)=4;
+C(13)=5;
+C(14)=6;
+C(15)=7; 
+
+x0 = b(1, 1); 
+y0 = b(1, 2); 
+
+c.x0y0 = [x0, y0]; 
+
+a = circshift(b, [-1, 0]); 
+DEL = a - b;
+% If the abs value of either (or both) components of a pair 
+% (deltax, deltay) is greater than 1, then by definition the curve 
+% is broken (or the points are out of order), and the program 
+% terminates. 
+
+% Create a single index vector using the formula described above. 
+z = 4*(DEL(:, 1) + 2) + (DEL(:, 2) + 2);
+% Use the index to map into the table. The following are 
+% the Freeman 8-chain codes, organized in a 1-by-np array. 
+fcc = C(z);
+% Check if direction of code sequence needs to be reversed. 
+
+% If 4-connectivity is specified, check that all components 
+% of fcc are 0, 2, 4, or 6. 
+if CONN == 4 
+    val = find(fcc == 1 | fcc == 3 | fcc == 5 | fcc ==7 );
+    if isempty(val) 
+        fcc = fcc./2; 
+    else warning('The specified 4-connected code cannot be satisfied.') 
+    end
+end
+% Freeman chain code for structure output. 
+c.fcc = fcc;
+
+% Obtain the first difference of fcc. 
+c.diff = firstdiff(fcc,CONN);
+% See below for function codediff. 
+% Obtain code of the integer of minimum magnitude. 
+c.mm = min_mag(fcc);
+% See below for function minmag. 
+% Obtain the first difference of fcc 
+c.diffmm = firstdiff(c.mm, CONN);
+disp(c.diff)
+end
